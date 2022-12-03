@@ -5,7 +5,8 @@ jobs:
     name: Slack Notification
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2.299.1
+    - uses: actions/checkout@v2
     - name: Slack Notify
+      uses: actions/checkout@v2
       env:
         SLACK_WEBHOOK: https://hooks.slack.com/services/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

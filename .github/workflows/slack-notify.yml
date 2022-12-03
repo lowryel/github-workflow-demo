@@ -10,3 +10,9 @@ jobs:
       uses: actions/checkout@v2
       env:
         SLACK_WEBHOOK: https://hooks.slack.com/services/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
+    - uses: actions/slack@v1
+      with:
+        status: ${{ job.status }}
+        steps: ${{ toJson(steps) }}
+        channel: '#'
+      if: always()

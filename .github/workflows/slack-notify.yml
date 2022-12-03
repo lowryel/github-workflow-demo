@@ -9,7 +9,7 @@ jobs:
     - name: Slack Notify
       uses: actions/checkout@v2
       env:
-        SLACK_WEBHOOK: https://hooks.slack.com/services/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
+        SLACK_WEBHOOK: ${{ secrets.WEBHOOK_URL }}
     - uses: slackapi/slack-github-action@v1.23.0
       with:
         status: ${{ job.status }}
@@ -17,4 +17,4 @@ jobs:
         channel-id: '#Testing'
       if: always()
       env:
-        WEBHOOK_URL: https://hooks.slack.com/services/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
+        WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}

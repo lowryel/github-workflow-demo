@@ -7,6 +7,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Slack Notify
-      uses: Adesoji1/github-workflow-demo@v2
+      uses: Adesoji1/action-slack-notify@v2
       env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK: https://hooks.slack.com/services/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

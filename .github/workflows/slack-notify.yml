@@ -12,7 +12,6 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.WEBHOOK_URL }}
     - uses: slackapi/slack-github-action@v1.23.0
       with:
-        status: ${{ job.status }}
         slack-message: "GitHub build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
         channel-id: '#Testing'
       if: always()

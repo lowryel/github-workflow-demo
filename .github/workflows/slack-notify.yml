@@ -1,12 +1,72 @@
-on: push
-name: Slack Notification Demo
+on:
+  workflow_call:
+   inputs:
+      ENVIRONMENT:
+        description: AWS environment where it sends a Slack notification.
+        type: string
+name: Slack Notification
+permissions:
+  contents: read
 jobs:
   slackNotification:
     name: Slack Notification
     runs-on: ubuntu-latest
+    #environment: dev-private
     steps:
-    - uses: actions/checkout@v2
-    - name: Slack Notification
-      uses: rtCamp/action-slack-notify@v2
+    - name: Get branch name
+      shell: bash
+      run: |
+        if [[ ${GITHUB_EVENT_NAME} == "pull_request" ]]
+        then
+           echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF})" >> $GITHUB_ENV
+           echo "Branch name: ${GITHUB_HEAD_REF}"
+        else
+           echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
+           echo "Branch name: ${GITHUB_REF#refs/heads/}"
+        fi
+    - name: Run id
+      run: echo ${{ github.run_id }}
+
+    - name: Get current workflow id
+      shell: bash
+      run: |
+        WORKFLOW_ID=$(curl --header 'authorization: Bearer ${{ github.token }}' \
+                           --header 'content-type: application/json' \
+        ${{ github.api_url }}/repos/${{ github.repository }}/actions/runs/${{ github.run_id }} | jq -r .workflow_id)
+        echo "WORKFLOW_ID=$WORKFLOW_ID" >> $GITHUB_ENV
+        echo "Workflow id: ${WORKFLOW_ID}"
+    - name: Get previous build status
+      shell: bash
+      id: last_status
+      run: |
+        last_status=$(curl --silent --header 'authorization: Bearer ${{ github.token }}' \
+                                    --header 'content-type: application/json' \
+        "${{ github.api_url }}/repos/${{ github.repository }}/actions/workflows/${{ env.WORKFLOW_ID }}/runs?per_page=1&status=completed&branch=${{ env.BRANCH_NAME }}" \
+        | jq -r .workflow_runs[0].conclusion)
+        echo "::set-output name=last_status::$last_status"
+        echo "Status of the previous build: $last_status"
+
+    - name: Send slack message for Failure Job
+      uses: gdcorp-action-public-forks/action-slack-notify@master
+      #if: ${{ always() && failure() && steps.slack_notification_rebuild.outcome == 'skipped' }}
+      if: ${{ failure() }} &&
+          ${{ job.status == 'failure' }}
+      id: slack_notification_failure
       env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK: https://hooks.slack.com/services/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
+        SLACK_MESSAGE: Job Failed
+      continue-on-error: false
+#
+    #- name: Failing step
+     # id: demo
+      #run: exit 1
+
+    - name: Send slack message for Recovered Job
+      uses: gdcorp-action-public-forks/action-slack-notify@master
+      #if: ${{ success() && (steps.last_status.outputs.last_status == 'failure') }}
+      if: ${{ job.status == 'success' }}
+      id: slack_notification_Recovered
+      env:
+        SLACK_WEBHOOK: https://hooks.slack.com/services/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
+        SLACK_MESSAGE: Job Recovered
+      continue-on-error: false

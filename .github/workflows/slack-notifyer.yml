@@ -21,7 +21,7 @@ jobs:
           echo test, and deploy your project.
 
       - name: Slack Notification
-        uses: lowryel/github-workflow-demo@v3
+      - uses: lowryel/github-workflow-demo@v3
         env:
           SLACK_WEBHOOK: https://hooks.slack.com/services/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
   

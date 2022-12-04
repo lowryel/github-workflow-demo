@@ -34,3 +34,11 @@ jobs:
 #      env:
 #        SLACK_WEBHOOK_URL:  https://hooks.slack.com/services/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
 #      if: always()
+# On failure
+    - name: Slack Notification - Deployment Failed
+      uses: rtCamp/action-slack-notify@v2.2.0
+      if: ${{ failure() }}
+      env:
+        SLACK_COLOR: ${{ job.status }}
+        SLACK_MESSAGE: "Failed deployment :x: commit: ${{ github.event.head_commit.message }}"
+        SLACK_WEBHOOK: https://hooks.slack.com/services/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

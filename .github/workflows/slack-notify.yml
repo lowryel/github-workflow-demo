@@ -2,8 +2,7 @@ on: push
 name: Slack Notification Demo
 jobs:
   slackNotification:
-    env:
-      SLACK_WEBHOOK:  ${{ secrets.WEBHOOK_URL }}
+
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Code from repo
@@ -14,8 +13,10 @@ jobs:
       with:
         status: ${{ job.status }}
         steps: ${{ toJson(steps) }}
-        channel-id: '#general' #B04DQG84X0U
+        channel: '#general' #B04DQG84X0U
       if: always()
+      env:
+        webhook_url:  ${{ secrets.WEBHOOK_URL }}
 # On failure
 #    - name: Slack Notification - Deployment Failed
 #      uses: rtCamp/action-slack-notify@v2

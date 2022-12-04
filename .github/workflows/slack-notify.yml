@@ -13,7 +13,11 @@ jobs:
 
     - uses: actions/checkout@v2
     - name: Slack Notification
-      uses: rtCamp/action-slack-notify@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: "16.x"
+    - uses: rtCamp/action-slack-notify@v2
       with:
         status: ${{ job.status }}
         channel-id: B04DQG84X0U

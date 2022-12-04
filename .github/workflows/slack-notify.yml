@@ -4,13 +4,13 @@ jobs:
   slackNotification:
     env:
       SLACK_WEBHOOK:  https://hooks.slack.com/services/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
-    name: Slack Notification
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout Code from repo
+      uses: actions/checkout@v3
 
     - name: Slack Notification
-    - uses: act10ns/slack@1
+      uses: act10ns/slack@1
       with:
         status: ${{ job.status }}
         steps: ${{ toJson(steps) }}

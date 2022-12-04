@@ -10,7 +10,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Slack Notification
-      uses: act10ns/slack@1
+      uses: act10ns/slack@main
       with:
         status: ${{ job.status }}
         steps: ${{ toJson(steps) }}

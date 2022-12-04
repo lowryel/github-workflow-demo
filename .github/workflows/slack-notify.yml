@@ -10,32 +10,26 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: "16.x"
-      
+
+    - uses: actions/checkout@v2
     - name: Slack Notification
       uses: rtCamp/action-slack-notify@v2
       env:
-        SLACK_CHANNEL: B04DQG84X0U
-        SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
-        SLACK_ICON: https://github.com/rtCamp.png?size=48
-        SLACK_MESSAGE: 'Post Content :rocket:'
-        SLACK_TITLE: Post Title
-        SLACK_USERNAME: rtCamp
         SLACK_WEBHOOK: https://hooks.slack.com/services/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
 
-
-#    - name: Post to Slack - starting
-#      uses: act10ns/slack@v1
-#      with:
-#        status: starting
-#        channel: B04DQG84X0U
-#      env:
-#        SLACK_WEBHOOK_URL:  https://hooks.slack.com/services/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
-#      if: always()
-# On failure
-    - name: Slack Notification - Deployment Failed
+    - name: Post to Slack - starting
       uses: rtCamp/action-slack-notify@v2
-      if: ${{ failure() }}
+      with:
+        status: ${{ job.status }}
+        channel: B04DQG84X0U
       env:
-        SLACK_COLOR: ${{ job.status }}
-        SLACK_MESSAGE: "Failed deployment :x: commit: ${{ github.event.head_commit.message }}"
-        SLACK_WEBHOOK: https://hooks.slack.com/services/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
+        SLACK_WEBHOOK_URL:  https://hooks.slack.com/services/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
+      if: always()
+# On failure
+#    - name: Slack Notification - Deployment Failed
+#      uses: rtCamp/action-slack-notify@v2
+#      if: ${{ failure() }}
+#      env:
+#        SLACK_COLOR: ${{ job.status }}
+#        SLACK_MESSAGE: "Failed deployment :x: commit: ${{ github.event.head_commit.message }}"
+#        SLACK_WEBHOOK: https://hooks.slack.com/services/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

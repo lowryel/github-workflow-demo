@@ -8,15 +8,16 @@ jobs:
     - uses: actions/checkout@v2
     - name: Slack Notify
       uses: actions/checkout@v2
-      env:
-        SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
-      if: always()
-      
     - uses: Ilshidur/action-slack@2.0.2
       with:
        status: ${{ job.status }}
        fields: repo,message # selectable (default: repo,message)
        channel-id: '#general'
       env:
-       SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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 # required
-      if: always() # Pick up events even if the job fails or is canceled.
+        SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
+      if: always()
+      
+
+      #env:
+       #SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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 # required
+      #if: always() # Pick up events even if the job fails or is canceled.

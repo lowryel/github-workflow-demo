@@ -20,7 +20,7 @@ jobs:
         SLACK_MESSAGE: 'Post Content :rocket:'
         SLACK_TITLE: Post Title
         SLACK_USERNAME: rtCamp
-        SLACK_WEBHOOK: https://hooks.slack.com/services/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
+        SLACK_WEBHOOK: https://hooks.slack.com/services/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
 
 
 #    - name: Post to Slack - starting
@@ -29,7 +29,7 @@ jobs:
 #        status: starting
 #        channel: '#general'
 #      env:
-#        SLACK_WEBHOOK_URL:  https://hooks.slack.com/services/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
+#        SLACK_WEBHOOK_URL:  https://hooks.slack.com/services/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
 #      if: always()
 # On failure
     - name: Slack Notification - Deployment Failed
@@ -38,4 +38,4 @@ jobs:
       env:
         SLACK_COLOR: ${{ job.status }}
         SLACK_MESSAGE: "Failed deployment :x: commit: ${{ github.event.head_commit.message }}"
-        SLACK_WEBHOOK: https://hooks.slack.com/services/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
+        SLACK_WEBHOOK: https://hooks.slack.com/services/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

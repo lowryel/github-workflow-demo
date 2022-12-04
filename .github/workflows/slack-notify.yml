@@ -9,18 +9,23 @@ jobs:
     - name: Slack Notify
       uses: actions/checkout@v2
       
-    #  with:
-   #     status: ${{ job.status }}
-  #      fields: repo,message,commit,author,action,eventName,ref,workflow,job,took,pullRequest # selectable (default: repo,message)
- #     env:
-#        SLACK_WEBHOOK_URL:  https://hooks.slack.com/services/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 # required
-      # if: always() # Pick up events even if the job fails or is canceled.
-
-    - name: Post to Slack - starting
-      uses: act10ns/slack@v1
-      with:
-        status: starting
-        channel: '#general'
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
       env:
-        SLACK_WEBHOOK_URL:  https://hooks.slack.com/services/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
-      if: always()
+        SLACK_CHANNEL: general
+        SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
+        SLACK_ICON: https://github.com/rtCamp.png?size=48
+        SLACK_MESSAGE: 'Post Content :rocket:'
+        SLACK_TITLE: Post Title
+        SLACK_USERNAME: rtCamp
+        SLACK_WEBHOOK: https://hooks.slack.com/services/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
+
+
+#    - name: Post to Slack - starting
+#      uses: act10ns/slack@v1
+#      with:
+#        status: starting
+#        channel: '#general'
+#      env:
+#        SLACK_WEBHOOK_URL:  https://hooks.slack.com/services/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
+#      if: always()

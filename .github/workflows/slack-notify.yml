@@ -9,15 +9,12 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: "14.x"
-        
-    - name: Slack Notify
-      uses: actions/checkout@v2
+        node-version: "16.x"
       
     - name: Slack Notification
       uses: rtCamp/action-slack-notify@v2
       env:
-        SLACK_CHANNEL: '#general'
+        SLACK_CHANNEL: general
         SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
         SLACK_ICON: https://github.com/rtCamp.png?size=48
         SLACK_MESSAGE: 'Post Content :rocket:'
@@ -36,9 +33,9 @@ jobs:
 #      if: always()
 # On failure
     - name: Slack Notification - Deployment Failed
-      uses: rtCamp/action-slack-notify@v2.2.0
+      uses: rtCamp/action-slack-notify@v2
       if: ${{ failure() }}
       env:
         SLACK_COLOR: ${{ job.status }}
         SLACK_MESSAGE: "Failed deployment :x: commit: ${{ github.event.head_commit.message }}"
-        SLACK_WEBHOOK: https://hooks.slack.com/services/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
+        SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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

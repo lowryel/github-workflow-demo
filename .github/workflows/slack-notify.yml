@@ -16,7 +16,7 @@ jobs:
         channel: '#general' #B04DQG84X0U
       if: always()
       env:
-        webhook_url:  ${{ secrets.WEBHOOK_URL }}
+        SLACK_WEBHOOK_URL:  ${{ secrets.SLACK_WEBHOOK_URL }}
 # On failure
 #    - name: Slack Notification - Deployment Failed
 #      uses: rtCamp/action-slack-notify@v2

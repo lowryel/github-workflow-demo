@@ -4,8 +4,7 @@ jobs:
   slackNotification:
 
     runs-on: ubuntu-latest
-    env:
-      SLACK_WEBHOOK_URL:  ${{ secrets.SLACK_WEBHOOK_URL }}
+
     steps:
     - name: Checkout Code from repo
       uses: actions/checkout@v3
@@ -17,6 +16,8 @@ jobs:
         steps: ${{ toJson(steps) }}
         channel: '#general' #B04DQG84X0U
       if: always()
+    env:
+      SLACK_WEBHOOK_URL:  ${{ secrets.SLACK_WEBHOOK_URL }}
 
   test-slack-integration:
     runs-on: ubuntu-latest
@@ -30,6 +31,8 @@ jobs:
         steps: ${{ toJson(steps) }}
         channel: '#general' #B04DQG84X0U
       if: always()
+    env:
+      SLACK_WEBHOOK_URL:  ${{ secrets.SLACK_WEBHOOK_URL }}
     
 # On failure
 #    - name: Slack Notification - Deployment Failed

@@ -3,7 +3,7 @@ name: Slack Notification Demo
 jobs:
   slackNotification:
     env:
-      SLACK_WEBHOOK:  https://hooks.slack.com/services/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
+      SLACK_WEBHOOK:  ${{ secrets.WEBHOOK_URL }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Code from repo

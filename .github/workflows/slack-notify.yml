@@ -2,6 +2,8 @@ on: push
 name: Slack Notification Demo
 jobs:
   slackNotification:
+    env:
+      SLACK_WEBHOOK:  https://hooks.slack.com/services/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
     name: Slack Notification
     runs-on: ubuntu-latest
     steps:
@@ -10,12 +12,12 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: "16.x"
-    - uses: rtCamp/action-slack-notify@v2
+    - name: Slack Notification
+    - uses: act10ns/slack@1
       with:
         status: ${{ job.status }}
-        channel-id: B04DQG84X0U
-      env:
-        SLACK_WEBHOOK:  https://hooks.slack.com/services/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
+        steps: ${{ toJson(steps) }}
+        channel-id: '#general' #B04DQG84X0U
       if: always()
 # On failure
 #    - name: Slack Notification - Deployment Failed

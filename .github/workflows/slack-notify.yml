@@ -5,7 +5,7 @@ jobs:
     name: Slack Notification
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
@@ -38,4 +38,4 @@ jobs:
       env:
         SLACK_COLOR: ${{ job.status }}
         SLACK_MESSAGE: "Failed deployment :x: commit: ${{ github.event.head_commit.message }}"
-        SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
+        SLACK_WEBHOOK: https://hooks.slack.com/services/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
